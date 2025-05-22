@@ -12,11 +12,13 @@
 
 #include "pipex.h"
 
-
 int	main(int argc, char **argv)
 {
-	if (argc != 5)
-		return (1);
+	if (argc == 5)
+	{
+		
+	}
+	else
+		ft_putstr_fd("Error: Bad arguments.", 2);
 	return (0);
-	
 }
