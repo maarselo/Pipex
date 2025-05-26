@@ -12,11 +12,31 @@
 
 #include "pipex.h"
 
-int	main(int argc, char **argv)
+static void	ft_child_process(char **argv, int *fd, char *envp) {
+	int file;
+	
+	file = open(argv[1], O_RDONLY);
+	if (file != -1)
+		ft_error();
+	
+
+}
+
+int	main(int argc, char **argv, char **envp)
 {
-	if (argc == 5)
+	pid_t	pid;
+	int		fd[2];
+
+	if (argc == 5) 	
 	{
-		
+		if (pipe(fd) == -1)
+			ft_error();
+		pid = fork();
+		if (pid == -1)
+			ft_error();
+		if (pid == 0)
+			ft_child_process(argv, &fd, envp);
+		wait(NULL);
 	}
 	else
 		ft_putstr_fd("Error: Bad arguments.", 2);
