@@ -19,9 +19,6 @@
 # include <stdio.h>
 
 
-
-
-void	ft_init_images(int *fd[], char file1, char file2);
 void	ft_error();
 
 #endif

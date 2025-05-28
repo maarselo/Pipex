@@ -24,7 +24,7 @@ HEADER = $(INCLUDE_DIR)/pipex.h
 #BONUS_HEADER = $(INCLUDE_DIR)/pipex_bonus.h
 
 #Fuentes archivos
-SRC_FILES = main.c 
+SRC_FILES = main.c utils.c
 #BONUS_FILES = 
 
 # Rutas completas
