@@ -15,7 +15,6 @@
 
 static void	ft_child_process(int *fd, char **argv, char **envp)
 {
-	(void)envp;
 	int	filein;
 
 	filein = open(argv[1], O_RDONLY);
@@ -26,7 +25,7 @@ static void	ft_child_process(int *fd, char **argv, char **envp)
 	close(filein);
 	dup2(fd[1], STDOUT_FILENO);
 	close(fd[1]);
-	
+	ft_execute(argv[2], envp);
 }
 
 static void	ft_parent_process(int *fd, char **argv, char **envp)
@@ -41,7 +40,7 @@ static void	ft_parent_process(int *fd, char **argv, char **envp)
 	close(fileout);
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
-
+	ft_execute(argv[3], envp);
 }
 
 int	main(int argc, char **argv, char **envp)
