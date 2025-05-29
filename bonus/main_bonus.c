@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mvillavi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/13 16:23:21 by mvillavi          #+#    #+#             */
-/*   Updated: 2025/05/13 16:23:22 by mvillavi         ###   ########.fr       */
+/*   Created: 2025/05/29 14:50:21 by mvillavi          #+#    #+#             */
+/*   Updated: 2025/05/29 14:50:22 by mvillavi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "pipex_bonus.h"
 
-# include "../Libft/libft.h"
-# include <fcntl.h>
-# include <sys/wait.h>
+int	main(int argc, char **argv, char **envp)
+{
+	if (argc >= 5)
+	{
+		if (!ft_strncmp(argv[1], "here_doc", 8))
+		{
+			ft_heredoc(argc, argv);
+		}
+	}
 
-void	ft_error(void);
-void	ft_execute(char *argv, char **envp);
-
-#endif
+}

@@ -11,29 +11,29 @@
 # **************************************************************************** #
 
 NAME = pipex
-#BONUS = pipex_bonus
+BONUS = pipex_bonus
 
 SRC_DIR = src
-#BONUS_DIR = bonus
+BONUS_DIR = bonus
 OBJ_DIR = obj
-#OBJ_BONUS_DIR = obj_bonus
+OBJ_BONUS_DIR = obj_bonus
 INCLUDE_DIR = include
 LIBFT_DIR = ./Libft
 
 HEADER = $(INCLUDE_DIR)/pipex.h
-#BONUS_HEADER = $(INCLUDE_DIR)/pipex_bonus.h
+BONUS_HEADER = $(INCLUDE_DIR)/pipex_bonus.h
 
 #Fuentes archivos
 SRC_FILES = main.c utils.c
-#BONUS_FILES = 
+BONUS_FILES = main_bonus.c utils_bonus.c
 
 # Rutas completas
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
-#BSRCS = $(addprefix $(BONUS_DIR)/, $(BONUS_FILES))
+BSRCS = $(addprefix $(BONUS_DIR)/, $(BONUS_FILES))
 
 # Objetos
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
-#OBJS_BONUS = $(addprefix $(OBJ_BONUS_DIR)/, $(BONUS_FILES:.c=.o))
+OBJS_BONUS = $(addprefix $(OBJ_BONUS_DIR)/, $(BONUS_FILES:.c=.o))
 
 LIBFT = $(LIBFT_DIR)/libft.a
 
@@ -68,33 +68,32 @@ $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 
 
-#bonus: $(BONUS)
+bonus: $(BONUS)
 
-#$(BONUS): $(OBJS_BONUS) $(LIBFT) $(BONUS_HEADER) Makefile
-#	@echo "$(GREEN)✔ Compilando $(BONUS)...$(RESET)"
-#	@$(CC) $(CFLAGS) $(OBJS_BONUS) $(LIBFT) $(MLX) $(MLX_FLAGS) -o $(BONUS)
-#	@echo "$(GREEN)   Compilación BONUS completada!$(RESET)"
+$(BONUS): $(OBJS_BONUS) $(LIBFT) $(HEADER) $(BONUS_HEADER) Makefile
+	@echo "$(GREEN)✔ Compilando $(BONUS)...$(RESET)"
+	@$(CC) $(CFLAGS) $(OBJS_BONUS) $(LIBFT) $(MLX) $(MLX_FLAGS) -o $(BONUS)
+	@echo "$(GREEN)   Compilación BONUS completada!$(RESET)"
 
-#$(OBJ_BONUS_DIR)/%.o: $(BONUS_DIR)/%.c | $(OBJ_BONUS_DIR)
-#	@echo "$(YELLOW)Compilando BONUS $<...$(RESET)"
-#	@$(CC) $(CFLAGS) -c $< -o $@
+$(OBJ_BONUS_DIR)/%.o: $(BONUS_DIR)/%.c | $(OBJ_BONUS_DIR)
+	@echo "$(YELLOW)Compilando BONUS $<...$(RESET)"
+	@$(CC) $(CFLAGS) -c $< -o $@
 
-#$(OBJ_BONUS_DIR):
-#	@mkdir -p $(OBJ_BONUS_DIR)
+$(OBJ_BONUS_DIR):
+	@mkdir -p $(OBJ_BONUS_DIR)
 
 clean:
 	@echo "$(RED)  Limpiando objetos...$(RESET)"
 	@make -C $(LIBFT_DIR) clean
 	@$(RM) $(OBJ_DIR) 
-#	$(OBJ_BONUS_DIR)
+	$(OBJ_BONUS_DIR)
 
 fclean: clean
 	@echo "$(RED)  Borrando ejecutables...$(RESET)"
 	@make -C $(LIBFT_DIR) fclean
 	@$(RM) $(NAME) 
-#	$(BONUS)
+	$(BONUS)
 
 re: fclean all
 
-.PHONY: all clean fclean re 
-#	bonus
+.PHONY: all clean fclean re bonus
