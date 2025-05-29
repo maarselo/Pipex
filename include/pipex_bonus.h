@@ -18,6 +18,10 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 
+# define HEREDOC_OUTFILE "heredoc"
+# define INFILE	"infile"
+# define OUTFILE "outfile"
 
+void	ft_heredoc(int argc, char **argv);
 
 #endif
