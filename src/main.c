@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "pipex.h"
-#include <string.h>
 
 static void	ft_child_process(int *fd, char **argv, char **envp)
 {
@@ -48,7 +47,7 @@ int	main(int argc, char **argv, char **envp)
 	pid_t	pid;
 	int		fd[2];
 
-	if (argc == 5) 	
+	if (argc == 5)
 	{
 		if (pipe(fd) == -1)
 			ft_error();

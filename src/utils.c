@@ -22,7 +22,7 @@ static void	ft_free_split(char **split)
 	free(split);
 }
 
-void	ft_error()
+void	ft_error(void)
 {
 	perror("\033[31mError\033[0m");
 	exit(EXIT_FAILURE);

@@ -18,7 +18,7 @@
 # include <sys/wait.h>
 # include <stdio.h>
 
+void	ft_error(void);
 void	ft_execute(char *argv, char **envp);
-void	ft_error();
 
 #endif
