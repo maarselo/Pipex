@@ -22,6 +22,12 @@
 # define INFILE	"infile"
 # define OUTFILE "outfile"
 
-void	ft_heredoc(int argc, char **argv);
+void	ft_error(void);
+void	ft_execute(char *command, char **envp);
+
+int		ft_open_file(char *file, const char *type);
+void	ft_heredoc(char **argv);
+void	ft_child_process(char *command, char **envp);
+
 
 #endif
