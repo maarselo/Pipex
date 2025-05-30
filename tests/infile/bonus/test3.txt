@@ -1,5 +1,3 @@
 user1 apple  
 user2 banana  
 user3 cherry
-
-./pipex infile "cat" "awk '{print \$2}'" "rev" outfile
