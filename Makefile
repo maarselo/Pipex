@@ -25,7 +25,7 @@ BONUS_HEADER = $(INCLUDE_DIR)/pipex_bonus.h
 
 #Fuentes archivos
 SRC_FILES = main.c utils.c
-BONUS_FILES = main_bonus.c utils_bonus.c
+BONUS_FILES = main_bonus.c utils_bonus.c auxiliar_bonus.c
 
 # Rutas completas
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
@@ -85,14 +85,12 @@ $(OBJ_BONUS_DIR):
 clean:
 	@echo "$(RED)  Limpiando objetos...$(RESET)"
 	@make -C $(LIBFT_DIR) clean
-	@$(RM) $(OBJ_DIR) 
-	$(OBJ_BONUS_DIR)
+	@$(RM) $(OBJ_DIR) $(OBJ_BONUS_DIR)
 
 fclean: clean
 	@echo "$(RED)  Borrando ejecutables...$(RESET)"
 	@make -C $(LIBFT_DIR) fclean
-	@$(RM) $(NAME) 
-	$(BONUS)
+	@$(RM) $(NAME) $(BONUS)
 
 re: fclean all
 
