@@ -1,0 +1,7 @@
+Hola
+adios
+HOLA
+prueba
+adios
+
+./pipex infile "tr 'A-Z' 'a-z'" "sort" "uniq" outfile

@@ -1,0 +1,8 @@
+hola mundo
+adiós
+hola otra vez
+adios otra
+hola por ultima vez
+adios por ultima vez
+
+./pipex infile "grep hola" "cut -c 1-4" outfile

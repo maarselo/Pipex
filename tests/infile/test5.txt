@@ -1,0 +1,5 @@
+línea 1
+línea 2
+línea 3
+
+./pipex infile "tail -n 2" "tr a-z A-Z" outfile

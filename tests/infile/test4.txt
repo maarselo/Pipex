@@ -1,0 +1,5 @@
+hola mundo
+esto es una linea
+adios
+
+./pipex infile "rev" "cut -c 1-5" outfile

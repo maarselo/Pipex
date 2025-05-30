@@ -1,0 +1,5 @@
+uno dos tres
+hola mundo prueba
+esto es fácil
+
+./pipex infile "awk '{print \$2}'" "sort" outfile
