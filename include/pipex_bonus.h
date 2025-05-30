@@ -29,5 +29,4 @@ int		ft_open_file(char *file, const char *type);
 void	ft_heredoc(char **argv);
 void	ft_child_process(char *command, char **envp);
 
-
 #endif

@@ -19,7 +19,7 @@ int	ft_open_file(char *file, const char *type)
 	int	fd;
 
 	if (!ft_strncmp(type, "heredoc", ft_strlen(type)))
-		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC | O_APPEND, 0644);
+		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else if (!ft_strncmp(type, "outfile", ft_strlen(type)))
 		fd = open (file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else
@@ -35,7 +35,6 @@ int	ft_open_file(char *file, const char *type)
 	return (fd);
 }
 
-
 void	ft_heredoc(char **argv)
 {
 	int		fd[2];
@@ -49,11 +48,11 @@ void	ft_heredoc(char **argv)
 	content = get_next_line(0);
 	while (content)
 	{
-		if (!ft_strncmp(content, delimiter, ft_strlen(delimiter)) 
+		if (!ft_strncmp(content, delimiter, ft_strlen(delimiter))
 			&& content[ft_strlen(delimiter)] == '\n')
 		{
 			free(content);
-			break;
+			break ;
 		}
 		write(1, "> ", 2);
 		write(fd[1], content, ft_strlen(content));

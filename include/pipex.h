@@ -15,7 +15,7 @@
 
 # include "../Libft/libft.h"
 # include <fcntl.h>
-#include <stdio.h>
+# include <stdio.h>
 # include <sys/wait.h>
 
 void	ft_error(void);
