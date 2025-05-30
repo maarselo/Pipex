@@ -15,9 +15,10 @@
 
 # include "../Libft/libft.h"
 # include <fcntl.h>
+#include <stdio.h>
 # include <sys/wait.h>
 
 void	ft_error(void);
-void	ft_execute(char *argv, char **envp);
+void	ft_execute(char *command, char **envp);
 
 #endif
