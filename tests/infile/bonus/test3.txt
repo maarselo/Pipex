@@ -1,3 +1,5 @@
-user1 apple  
-user2 banana  
-user3 cherry
+banana
+apple
+cherry
+banana
+apple
