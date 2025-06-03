@@ -12,72 +12,35 @@
 
 #include "pipex_bonus.h"
 
-static void	ft_free_split(char **split)
+int	ft_open_file(char *file, const char *type)
 {
-	int	i;
+	int	fd;
 
-	i = -1;
-	while (split[++i])
-		free(split[i]);
-	free(split);
-}
-
-static char **ft_split_path_variable(char **envp)
-{
-	int		i;
-
-	i = 0;
-	while (envp[i] && ft_strncmp(envp[i], "PATH", 4) != 0)
-		i++;
-	if (!envp[i])
-		return (NULL);
-	return (ft_split(envp[i] + 5, ':'));
-}
-
-static char	*ft_find_path(char *command, char **envp)
-{
-	int		i;
-	char	*tmp;
-	char	*possible_path;
-	char	**path;
-
-	if (access(command, X_OK) == 0)
-		return (ft_strdup(command));
-	path = ft_split_path_variable(envp);
-	if (!path)
+	if (!ft_strncmp(type, "heredoc", ft_strlen(type)))
+		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	else if (!ft_strncmp(type, "outfile", ft_strlen(type)))
+		fd = open (file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else
+		fd = open(file, O_RDONLY);
+	if (fd == -1)
 		ft_error();
-	i = -1;
-	while (path[++i])
+	if (!ft_strncmp(type, "infile", ft_strlen(type)))
 	{
-		tmp = ft_strjoin(path[i], "/");
-		possible_path = ft_strjoin(tmp, command);
-		free (tmp);
-		if (access(possible_path, X_OK) == 0)
-		{
-			ft_free_split(path);
-			return (possible_path);
-		}
-		free(possible_path);
+		dup2(fd, STDIN_FILENO);
+		close(fd);
+		return (STDIN_FILENO);
 	}
-	return (ft_free_split(path), NULL);
+	return (fd);
 }
 
-void	ft_execute(char *command, char **envp)
+void	ft_error()
 {
-	char	**split_command;
-	char	*path;
+	perror("\033[31mError\033[0m");
+	exit(EXIT_FAILURE);
+}
 
-	split_command = ft_split(command, ' ');
-	path = ft_find_path(split_command[0], envp);
-	if (!path)
-	{
-		ft_free_split(split_command);
-		ft_error_command();
-	}
-	if (execve(path, split_command, envp) == -1)
-	{
-		free(path);
-		ft_free_split(split_command);
-		ft_error_command();
-	}
+void	ft_error_command()
+{
+	perror("\033[31mError command\033[0m");
+	exit(127);
 }
