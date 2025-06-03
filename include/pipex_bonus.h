@@ -16,6 +16,7 @@
 # include "../Libft/libft.h"
 # include "./pipex.h"
 # include <fcntl.h>
+# include <errno.h>
 # include <sys/wait.h>
 
 # define HEREDOC_OUTFILE "heredoc"
