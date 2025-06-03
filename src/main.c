@@ -70,9 +70,9 @@ int	main(int argc, char **argv, char **envp)
 		ft_child_process(fd, pid, argv, envp);
 		pid = fork();
 		ft_parent_process(fd, pid, argv, envp);
-		close(fd[0]);/////////////
-		close(fd[1]);////////////////
-		waitpid(pid, &status, 0);////////////////////
+		close(fd[0]);
+		close(fd[1]);
+		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
 			return (WEXITSTATUS(status));
 	}

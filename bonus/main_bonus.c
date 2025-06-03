@@ -68,9 +68,10 @@ void	ft_child_process(char *command, char **envp)
 		close(fd[0]);
 	}
 }
+
 int	ft_last_command(int fdout, char *command, char **envp)
 {
-	int	status;
+	int		status;
 	pid_t	pid;
 
 	dup2(fdout, STDOUT_FILENO);
@@ -80,7 +81,7 @@ int	ft_last_command(int fdout, char *command, char **envp)
 		ft_error();
 	if (pid == 0)
 		ft_execute(command, envp);
-	waitpid(pid, &status, 0 );
+	waitpid(pid, &status, 0);
 	return (WEXITSTATUS(status));
 }
 

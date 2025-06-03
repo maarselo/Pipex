@@ -33,13 +33,13 @@ int	ft_open_file(char *file, const char *type)
 	return (fd);
 }
 
-void	ft_error()
+void	ft_error(void)
 {
 	perror("\033[31mError\033[0m");
 	exit(EXIT_FAILURE);
 }
 
-void	ft_error_command()
+void	ft_error_command(void)
 {
 	perror("\033[31mError command\033[0m");
 	exit(127);

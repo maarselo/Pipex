@@ -65,7 +65,7 @@ static char	*ft_find_path(char *command, char **envp)
 		}
 		free(possible_path);
 	}
-	return (ft_free_split(path), NULL);////////
+	return (ft_free_split(path), NULL);
 }
 
 void	ft_execute(char *command, char **envp)

@@ -25,7 +25,7 @@ static void	ft_free_split(char **split)
 	free(split);
 }
 
-static char **ft_split_path_variable(char **envp)
+static char	**ft_split_path_variable(char **envp)
 {
 	int		i;
 
