@@ -12,6 +12,12 @@
 
 #include "pipex.h"
 
+void	ft_error_command(void)
+{
+	perror("\033[31mError command\033[0m");
+	exit(127);
+}
+
 static void	ft_free_split(char **split)
 {
 	int	i;
@@ -22,48 +28,44 @@ static void	ft_free_split(char **split)
 	free(split);
 }
 
-void	ft_error()
+static char	**ft_split_path_variable(char **envp)
 {
-	perror("\033[31mError\033[0m");
-	exit(EXIT_FAILURE);
-}
+	int		i;
 
-void	ft_error_command()
-{
-	perror("\033[31mError command\033[0m");
-	exit(127);
+	i = 0;
+	while (envp[i] && ft_strncmp(envp[i], "PATH", 4) != 0)
+		i++;
+	if (!envp[i])
+		return (NULL);
+	return (ft_split(envp[i] + 5, ':'));
 }
 
 static char	*ft_find_path(char *command, char **envp)
 {
 	int		i;
 	char	*tmp;
-	char	*path;
-	char	**variables;
+	char	*possible_path;
+	char	**path;
 
 	if (access(command, X_OK) == 0)
 		return (ft_strdup(command));
-	i = 0;
-	while (envp[i] && ft_strncmp(envp[i], "PATH", 4) != 0)
-		i++;
-	if (!envp[i])
-		return (NULL);
-	variables = ft_split(envp[i] + 5, ':');
+	path = ft_split_path_variable(envp);
+	if (!path)
+		ft_error();
 	i = -1;
-	while (variables[++i])
+	while (path[++i])
 	{
-		tmp = ft_strjoin(variables[i], "/");
-		path = ft_strjoin(tmp, command);
+		tmp = ft_strjoin(path[i], "/");
+		possible_path = ft_strjoin(tmp, command);
 		free (tmp);
-		if (access(path, X_OK) == 0)
+		if (access(possible_path, X_OK) == 0)
 		{
-			ft_free_split(variables);
-			return (path);
+			ft_free_split(path);
+			return (possible_path);
 		}
-		free(path);
+		free(possible_path);
 	}
-	ft_free_split(variables);
-	return (NULL);
+	return (ft_free_split(path), NULL);////////
 }
 
 void	ft_execute(char *command, char **envp)
