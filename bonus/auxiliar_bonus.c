@@ -22,10 +22,16 @@ static void	ft_free_split(char **split)
 	free(split);
 }
 
-void	ft_error(void)
+void	ft_error()
 {
 	perror("\033[31mError\033[0m");
 	exit(EXIT_FAILURE);
+}
+
+void	ft_error_command()
+{
+	perror("\033[31mError command\033[0m");
+	exit(127);
 }
 
 static char	*ft_find_path(char *command, char **envp)
@@ -35,9 +41,13 @@ static char	*ft_find_path(char *command, char **envp)
 	char	*path;
 	char	**variables;
 
+	if (access(command, X_OK) == 0)
+		return (ft_strdup(command));
 	i = 0;
-	while (ft_strncmp(envp[i], "PATH", 4) != 0)
+	while (envp[i] && ft_strncmp(envp[i], "PATH", 4) != 0)
 		i++;
+	if (!envp[i])
+		return (NULL);
 	variables = ft_split(envp[i] + 5, ':');
 	i = -1;
 	while (variables[++i])
@@ -66,11 +76,12 @@ void	ft_execute(char *command, char **envp)
 	if (!path)
 	{
 		ft_free_split(split_command);
-		ft_error();
+		ft_error_command();
 	}
 	if (execve(path, split_command, envp) == -1)
 	{
+		free(path);
 		ft_free_split(split_command);
-		ft_error();
+		ft_error_command();
 	}
 }

@@ -19,6 +19,8 @@ int	main(int argc, char **argv, char **envp)
 {
 	int	i;
 	int	fdout;
+	int		status;
+	pid_t	pid;
 
 	if (argc >= 5)
 	{
@@ -38,7 +40,14 @@ int	main(int argc, char **argv, char **envp)
 			ft_child_process(argv[i++], envp);
 		dup2(fdout, STDOUT_FILENO);
 		close(fdout);
-		ft_execute(argv[argc - 2], envp);
+		pid = fork();
+		if (pid == -1)
+			ft_error();
+		if (pid == 0)
+			ft_execute(argv[argc - 2], envp);
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			return (WEXITSTATUS(status));
 	}
 	else
 		ft_error();
