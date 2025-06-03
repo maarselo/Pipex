@@ -12,10 +12,20 @@
 
 #include "pipex.h"
 
-static void	ft_child_process(int *fd, char **argv, char **envp)
+void	ft_error(void)
+{
+	perror("\033[31mError\033[0m");
+	exit(EXIT_FAILURE);
+}
+
+static void	ft_child_process(int *fd, pid_t pid, char **argv, char **envp)
 {
 	int	filein;
 
+	if (pid == -1)
+		ft_error();
+	if (pid != 0)
+		return ;
 	filein = open(argv[1], O_RDONLY);
 	if (filein == -1)
 		ft_error();
@@ -27,10 +37,14 @@ static void	ft_child_process(int *fd, char **argv, char **envp)
 	ft_execute(argv[2], envp);
 }
 
-static void	ft_parent_process(int *fd, char **argv, char **envp)
+static void	ft_parent_process(int *fd, pid_t pid, char **argv, char **envp)
 {
 	int	fileout;
 
+	if (pid == -1)
+		ft_error();
+	if (pid != 0)
+		return ;
 	fileout = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fileout == -1)
 		ft_error();
@@ -44,34 +58,24 @@ static void	ft_parent_process(int *fd, char **argv, char **envp)
 
 int	main(int argc, char **argv, char **envp)
 {
-	pid_t	pid1;
-	pid_t	pid2;
-	int		status1;
-	int		status2;
+	pid_t	pid;
+	int		status;
 	int		fd[2];
 
 	if (argc == 5)
 	{
 		if (pipe(fd) == -1)
 			ft_error();
-		pid1 = fork();
-		if (pid1 == -1)
-			ft_error();
-		if (pid1 == 0)
-			ft_child_process(fd, argv, envp);
-		pid2 = fork();	
-		if (pid2 == -1)
-			ft_error();
-		if (pid2 == 0)
-			ft_parent_process(fd, argv, envp);
-		close(fd[0]);
-		close(fd[1]);
-		waitpid(pid1, &status1, 0);
-		waitpid(pid2, &status2, 0);
-		if (WIFEXITED(status2))
-			return (WEXITSTATUS(status2));
+		pid = fork();
+		ft_child_process(fd, pid, argv, envp);
+		pid = fork();
+		ft_parent_process(fd, pid, argv, envp);
+		close(fd[0]);/////////////
+		close(fd[1]);////////////////
+		waitpid(pid, &status, 0);////////////////////
+		if (WIFEXITED(status))
+			return (WEXITSTATUS(status));
 	}
 	else
-		ft_putstr_fd("Error: Bad arguments.", 2);
-	return (0);
+		ft_putstr_fd("Error: Invalid arguments.", 2);
 }
