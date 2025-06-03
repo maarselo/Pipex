@@ -14,6 +14,7 @@
 
 // I put two if, for the same infile type, because i the case its the first file
 // i have to modify the stdin 
+
 int	ft_open_file(char *file, const char *type)
 {
 	int	fd;
@@ -35,58 +36,14 @@ int	ft_open_file(char *file, const char *type)
 	return (fd);
 }
 
-void	ft_heredoc(char **argv)
+void	ft_error()
 {
-	int		fd[2];
-	char	*delimiter;
-	char	*content;
-
-	if (pipe(fd) == -1)
-		ft_error();
-	delimiter = argv[2];
-	write(1, "> ", 2);
-	content = get_next_line(0);
-	while (content)
-	{
-		if (!ft_strncmp(content, delimiter, ft_strlen(delimiter))
-			&& content[ft_strlen(delimiter)] == '\n')
-		{
-			free(content);
-			break ;
-		}
-		write(1, "> ", 2);
-		write(fd[1], content, ft_strlen(content));
-		free(content);
-		content = get_next_line(0);
-	}
-	close(fd[1]);
-	dup2(fd[0], STDIN_FILENO);
-	close(fd[0]);
+	perror("\033[31mError\033[0m");
+	exit(EXIT_FAILURE);
 }
 
-//Deberia de hacer un close del archivo outfile
-void	ft_child_process(char *command, char **envp)
+void	ft_error_command()
 {
-	int		fd[2];
-	pid_t	pid;
-
-	if (pipe(fd) == -1)
-		ft_error();
-	pid = fork();
-	if (pid == -1)
-		ft_error();
-	if (pid == 0)
-	{
-		close(fd[0]);
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[1]);
-		ft_execute(command, envp);
-	}
-	else
-	{
-		wait(NULL);
-		close(fd[1]);
-		dup2(fd[0], STDIN_FILENO);
-		close(fd[0]);
-	}
+	perror("\033[31mError command\033[0m");
+	exit(127);
 }
